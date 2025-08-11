@@ -1,0 +1,337 @@
+{% comment %}
+AquaBlast Landing – RTL one-page product section (Online Store 2.0)
+- Drop this file into: sections/aquablast-landing.liquid
+- In the theme customizer, pick a product and tweak colors/content.
+- Fully RTL, black/white/purple palette, GitHub-ready.
+- Includes variant picker synced to Shopify variants, quantity, add-to-cart, gallery, reviews images, 4:3 video, sticky timer bar, and payment-pill: "💳 אשראי / Bit / PayPal • 🔒 SSL • ↩️ החזר 14 יום".
+
+Notes:
+- Uses a scoped wrapper ID so styles don’t leak.
+- If your theme already bundles Alpine/Stimulus, this works without. Vanilla JS only.
+- To replace the demo review images, edit the "Reviews" block settings in the section.
+{% endcomment %}
+
+{% assign sec_id = section.id %}
+<section id="aquablast-{{ sec_id }}" lang="he" dir="rtl">
+  <style>
+    #aquablast-{{ sec_id }}{ --bg:#0b0b0f; --card:#111219; --muted:#a3a7b3; --text:#f1f2f6; --ok:#22c55e; --warn:#f59e0b; --accent:#7c3aed; --max:1120px; --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.25) }
+    #aquablast-{{ sec_id }} *{ box-sizing:border-box }
+    #aquablast-{{ sec_id }} .ab-body{ margin:0; background:linear-gradient(180deg,#0b0b0f,#0e0f13); color:var(--text); font-family:var(--font-body-family, system-ui, Segoe UI, Arial, sans-serif) }
+    #aquablast-{{ sec_id }} a{ color:inherit; text-decoration:none }
+    #aquablast-{{ sec_id }} img, #aquablast-{{ sec_id }} video{ max-width:100%; display:block; border-radius:14px }
+    #aquablast-{{ sec_id }} .container{ max-width:var(--max); margin:0 auto; padding:clamp(16px,3vw,28px) }
+    #aquablast-{{ sec_id }} .pill{ display:inline-flex; gap:8px; align-items:center; padding:8px 12px; border-radius:999px; background:#171827; color:#d1d5db; border:1px solid #23263b; font-weight:700; font-size:.95rem }
+    #aquablast-{{ sec_id }} header{ position:sticky; top:0; z-index:20; backdrop-filter:saturate(120%) blur(6px); background:rgba(8,8,12,.7); border-bottom:1px solid #1a1d2c }
+    #aquablast-{{ sec_id }} header .wrap{ max-width:var(--max); margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:10px 16px }
+    #aquablast-{{ sec_id }} .brand{ display:flex; gap:12px; align-items:center }
+    #aquablast-{{ sec_id }} .logo{ width:38px; height:38px; border-radius:12px; background:radial-gradient(circle at 30% 30%, #a78bfa, #4c1d95) }
+    #aquablast-{{ sec_id }} nav{ display:flex; gap:18px; align-items:center; font-weight:800; color:#cbd5e1 }
+    #aquablast-{{ sec_id }} .cta{ background:var(--accent); color:#fff; padding:12px 18px; border-radius:12px; font-weight:900; border:none; cursor:pointer; box-shadow:0 10px 20px rgba(124,58,237,.35); transition:transform .15s ease }
+    #aquablast-{{ sec_id }} .cta[disabled]{ opacity:.6; cursor:not-allowed }
+    #aquablast-{{ sec_id }} .cta:hover:not([disabled]){ transform:translateY(-2px) }
+    #aquablast-{{ sec_id }} .hero .grid{ display:grid; grid-template-columns:1.2fr .8fr; gap:28px; align-items:center }
+    #aquablast-{{ sec_id }} .card{ background:linear-gradient(180deg,#12131b,#0f1017); border:1px solid #222536; border-radius:var(--radius); padding:24px; box-shadow:var(--shadow) }
+    #aquablast-{{ sec_id }} .h1{ font-size:clamp(28px,4.2vw,44px); line-height:1.15; margin:10px 0 10px; font-weight:900 }
+    #aquablast-{{ sec_id }} .sub{ color:#cbd5e1; font-size:1.1rem }
+    #aquablast-{{ sec_id }} .price{ display:flex; align-items:end; gap:14px; margin:16px 0 }
+    #aquablast-{{ sec_id }} .price .now{ font-size:clamp(24px,4vw,40px); font-weight:900; color:#fff }
+    #aquablast-{{ sec_id }} .price .old{ color:#9ca3af; text-decoration:line-through }
+    #aquablast-{{ sec_id }} .urgency{ display:flex; gap:10px; align-items:center; background:rgba(245,158,11,.12); border:1px solid rgba(245,158,11,.4); color:#ffd89c; padding:8px 12px; border-radius:12px; font-weight:800 }
+    #aquablast-{{ sec_id }} .timer{ font-variant-numeric:tabular-nums; letter-spacing:.5px; color:#ffe7b0 }
+    #aquablast-{{ sec_id }} .section{ margin:48px 0 }
+    #aquablast-{{ sec_id }} .section h2{ font-size:clamp(22px,3.5vw,34px); margin:0 0 18px; font-weight:900 }
+    #aquablast-{{ sec_id }} .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:18px }
+    #aquablast-{{ sec_id }} .gallery{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px }
+    #aquablast-{{ sec_id }} .gallery img{ width:100%; height:auto; border-radius:12px; border:1px solid #232634 }
+    #aquablast-{{ sec_id }} .reviews-photos{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px }
+    #aquablast-{{ sec_id }} .r-card{ position:relative; border:1px solid #232634; border-radius:14px; overflow:hidden; background:#0e1016 }
+    #aquablast-{{ sec_id }} .r-card img{ width:100%; height:auto; display:block }
+    #aquablast-{{ sec_id }} .stars{ position:absolute; bottom:8px; left:8px; background:rgba(0,0,0,.55); padding:6px 10px; border-radius:999px; font-weight:800 }
+    #aquablast-{{ sec_id }} .sticky{ position:sticky; bottom:0; z-index:30; background:rgba(8,8,12,.92); backdrop-filter:blur(8px); border-top:1px solid #1e2230 }
+    #aquablast-{{ sec_id }} .sticky .wrap{ max-width:var(--max); margin:0 auto; display:flex; align-items:center; gap:14px; padding:10px 16px }
+    /* Variant picker */
+    #aquablast-{{ sec_id }} .picker{ display:grid; gap:10px; margin-top:8px }
+    #aquablast-{{ sec_id }} .picker .row{ display:flex; gap:12px; align-items:center; flex-wrap:wrap }
+    #aquablast-{{ sec_id }} .swatches{ display:flex; gap:8px; flex-wrap:wrap }
+    #aquablast-{{ sec_id }} .swatch{ min-width:42px; padding:8px 12px; border-radius:10px; border:1px solid #2a3142; background:#151728; cursor:pointer; font-weight:800; color:#e5e7eb }
+    #aquablast-{{ sec_id }} .swatch[aria-pressed="true"]{ outline:2px solid var(--accent); outline-offset:2px; background:#191a2d }
+    #aquablast-{{ sec_id }} select{ appearance:none; background:#141624; color:#f3f4f6; padding:10px 12px; border:1px solid #24283a; border-radius:10px; min-width:220px }
+    #aquablast-{{ sec_id }} .qty{ display:flex; align-items:center; gap:6px }
+    #aquablast-{{ sec_id }} .qty input{ width:90px; padding:8px 10px; border-radius:10px; border:1px solid #24283a; background:#0f1218; color:#fff }
+    #aquablast-{{ sec_id }} .inline-cta{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-top:10px }
+    #aquablast-{{ sec_id }} .mini-note{ color:#aab2bf; font-size:.9rem }
+    /* Video as image ratio */
+    #aquablast-{{ sec_id }} .media-frame{ border:1px solid #232634; border-radius:14px; overflow:hidden; background:#0c0e13 }
+    #aquablast-{{ sec_id }} .media-frame video{ width:100%; height:auto; object-fit:cover; aspect-ratio:4/3 }
+    @media (max-width:980px){
+      #aquablast-{{ sec_id }} .hero .grid{ grid-template-columns:1fr }
+      #aquablast-{{ sec_id }} .grid-2{ grid-template-columns:1fr }
+      #aquablast-{{ sec_id }} .gallery, #aquablast-{{ sec_id }} .reviews-photos{ grid-template-columns:1fr 1fr }
+    }
+  </style>
+
+  <header>
+    <div class="wrap">
+      <div class="brand"><div class="logo" aria-hidden="true"></div><strong style="font-size:1.05rem">{{ section.settings.brand | default: 'AquaBlast' }}</strong></div>
+      <nav>
+        <a href="#variants">דגמים</a>
+        <a href="#video">וידאו</a>
+        <a href="#reviews">ביקורות</a>
+        <button class="cta" onclick="document.querySelector('#aquablast-{{ sec_id }} #order').scrollIntoView({behavior:'smooth'});">קנה עכשיו</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container hero ab-body">
+    <div class="grid">
+      <section class="card">
+        <div class="pill">{{ section.settings.payment_pill | escape }}</div>
+        <h1 class="h1">{{ section.settings.heading }}</h1>
+        <p class="sub">{{ section.settings.subheading }}</p>
+        <div class="price">
+          {% if section.settings.price_now != blank %}<div class="now">{{ section.settings.price_now }}</div>{% endif %}
+          {% if section.settings.price_old != blank %}<div class="old">{{ section.settings.price_old }}</div>{% endif %}
+        </div>
+        <div class="urgency">⏳ המבצע מסתיים בעוד: <span id="dealTimer-{{ sec_id }}" class="timer">—</span></div>
+
+        <!-- Variant picker synced with product -->
+        <div id="variants" class="picker" aria-label="בחירת דגם">
+          {% if section.settings.product != blank %}
+            <div class="row">
+              <label><strong>בחרו דגם:</strong></label>
+              {% for option in section.settings.product.options_with_values %}
+                <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap">
+                  <span class="mini-note">{{ option.name }}:</span>
+                  <select name="options[{{ option.name | escape }}]" data-option-index="{{ forloop.index0 }}">
+                    {% for value in option.values %}
+                      <option value="{{ value | escape }}"{% if option.selected_value == value %} selected{% endif %}>{{ value }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="row mini-note">בחרו מוצר למטה בהגדרות הסקשן.</div>
+          {% endif %}
+
+          <div class="row qty">
+            <label for="qty-{{ sec_id }}"><strong>כמות:</strong></label>
+            <input id="qty-{{ sec_id }}" type="number" min="1" value="1" />
+          </div>
+
+          {% if section.settings.product != blank %}
+          <div class="inline-cta">
+            <form method="post" action="/cart/add" id="product-form-{{ sec_id }}">
+              <input type="hidden" name="id" value="{{ section.settings.product.selected_or_first_available_variant.id }}" data-variant-input>
+              <input type="hidden" name="quantity" value="1" data-qty-input>
+              <button type="submit" class="cta">קנה עכשיו</button>
+            </form>
+            <span class="pill" id="skuView-{{ sec_id }}">SKU: {{ section.settings.product.selected_or_first_available_variant.sku | default: section.settings.product.selected_or_first_available_variant.id }}</span>
+          </div>
+          <div class="mini-note">⏳ מבצע עד חצות • נשארו <strong>{{ section.settings.stock_note | default: 'זמין במלאי' }}</strong></div>
+          {% endif %}
+        </div>
+      </section>
+
+      <aside class="card">
+        {% assign first_image = section.settings.hero_image | default: section.settings.product.featured_image %}
+        {% if first_image != blank %}
+          <img id="heroImg-{{ sec_id }}" alt="תצוגת דגם" src="{{ first_image | image_url: width: 1445 }}" />
+        {% elsif section.settings.product.featured_media != blank %}
+          {{ section.settings.product.featured_media | media_tag: image_size: "1445x" }}
+        {% else %}
+          <div class="mini-note">הוסיפו תמונת הירו בהגדרות הסקשן או בחרו מוצר.</div>
+        {% endif %}
+      </aside>
+    </div>
+  </main>
+
+  <!-- Video 4:3 -->
+  <section id="video" class="container section">
+    <div class="media-frame">
+      {% if section.settings.video_url != blank %}
+        <video controls playsinline preload="metadata">
+          <source src="{{ section.settings.video_url }}" type="video/mp4" />
+          הדפדפן שלך לא תומך בוידאו.
+        </video>
+      {% else %}
+        <div class="mini-note">הוסיפו קישור וידאו MP4 בהגדרות הסקשן (4:3).</div>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="container section">
+    <h2>גלריה</h2>
+    <div class="gallery">
+      {% if section.settings.gallery_images.size > 0 %}
+        {% for img in section.settings.gallery_images %}
+          <img alt="גלריה {{ forloop.index }}" src="{{ img | image_url: width: 1445 }}" />
+        {% endfor %}
+      {% elsif section.settings.product.media_count > 0 %}
+        {% for media in section.settings.product.media limit: 6 %}
+          {% if media.media_type == 'image' %}
+            {{ media | image_url: width: 1445 | image_tag: alt: media.alt }}
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <div class="mini-note">עדיין אין תמונות בגלריה.</div>
+      {% endif %}
+    </div>
+  </section>
+
+  <section id="reviews" class="container section">
+    <h2>מה הלקוחות שלנו אומרים</h2>
+    <div class="reviews-photos">
+      {% for block in section.blocks %}
+        {% if block.type == 'review' %}
+          <div class="r-card">
+            {% if block.settings.image != blank %}
+              <img src="{{ block.settings.image | image_url: width: 1200 }}" alt="ביקורת {{ forloop.index }}" loading="lazy" />
+            {% endif %}
+            <div class="stars">{{ block.settings.stars }}</div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+
+  <section id="order" class="container section">
+    <h2>איך ממשיכים להזמנה?</h2>
+    <p>בחרתם דגם וכמות? לחצו על הכפתור ונוסיף את הדגם לסל וניקח אתכם לקופה.</p>
+    {% if section.settings.product != blank %}
+      <form method="post" action="/cart/add" id="product-form-bottom-{{ sec_id }}">
+        <input type="hidden" name="id" value="{{ section.settings.product.selected_or_first_available_variant.id }}" data-variant-input>
+        <input type="hidden" name="quantity" value="1" data-qty-input>
+        <button type="submit" class="cta">קנה עכשיו</button>
+      </form>
+    {% endif %}
+  </section>
+
+  {% if section.settings.show_sticky %}
+  <div class="sticky">
+    <div class="wrap">
+      <div class="pill">⏳ מסתיים בעוד: <span id="dealTimerSticky-{{ sec_id }}" class="timer">—</span></div>
+      <div style="margin-inline-start:auto"></div>
+      {% if section.settings.product != blank %}
+        <form method="post" action="/cart/add" id="product-form-sticky-{{ sec_id }}">
+          <input type="hidden" name="id" value="{{ section.settings.product.selected_or_first_available_variant.id }}" data-variant-input>
+          <input type="hidden" name="quantity" value="1" data-qty-input>
+          <button type="submit" class="cta">קנה עכשיו</button>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  <script>
+  (function(){
+    const root = document.querySelector('#aquablast-{{ sec_id }}');
+    if(!root) return;
+
+    // Sync quantity inputs across forms
+    const qty = root.querySelector('#qty-{{ sec_id }}');
+    const qtyTargets = root.querySelectorAll('[data-qty-input]');
+    function syncQty(){ qtyTargets.forEach(i => i.value = Math.max(1, parseInt(qty?.value||'1',10))); }
+    qty?.addEventListener('input', syncQty); syncQty();
+
+    // Variant logic (vanilla): match selected options to variant ID
+    const productJson = {{ section.settings.product | json }};
+    const selectors = root.querySelectorAll('select[name^="options["]');
+    const variantInputs = root.querySelectorAll('[data-variant-input]');
+    const heroImg = root.querySelector('#heroImg-{{ sec_id }}');
+    const skuView = root.querySelector('#skuView-{{ sec_id }}');
+
+    function currentOptions(){
+      const opts = [];
+      selectors.forEach(s => { const idx = parseInt(s.dataset.optionIndex,10); opts[idx] = s.value; });
+      return opts;
+    }
+    function findVariant(opts){
+      if(!productJson || !productJson.variants) return null;
+      return productJson.variants.find(v => {
+        return v.options.every((val, i) => String(val) === String(opts[i]));
+      }) || productJson.variants[0] || null;
+    }
+    function updateVariant(){
+      const v = findVariant(currentOptions());
+      if(!v) return;
+      variantInputs.forEach(i => i.value = v.id);
+      if(skuView) skuView.textContent = 'SKU: ' + (v.sku || v.id);
+      if(heroImg && v.featured_image && v.featured_image.src){ heroImg.src = v.featured_image.src; }
+    }
+    selectors.forEach(sel => sel.addEventListener('change', updateVariant));
+    updateVariant();
+
+    // Countdown: N days from first visit (per-section key)
+    const DAYS = {{ section.settings.promo_days | default: 7 | plus: 0 }};
+    const KEY = 'aquablast_promo_start_ts_{{ sec_id }}';
+    const WEEK = DAYS*24*60*60*1000;
+    let start = Number(localStorage.getItem(KEY));
+    if(!start){ start = Date.now(); localStorage.setItem(KEY, String(start)); }
+    const deadline = start + WEEK;
+    const main = root.querySelector('#dealTimer-{{ sec_id }}');
+    const sticky = root.querySelector('#dealTimerSticky-{{ sec_id }}');
+    function pad(n){ return String(n).padStart(2,'0'); }
+    function tick(){
+      const now = Date.now();
+      let diff = deadline - now;
+      if(diff <= 0){
+        main && (main.textContent = 'המבצע הסתיים');
+        sticky && (sticky.textContent = 'המבצע הסתיים');
+        root.querySelectorAll('.cta').forEach(btn => btn.disabled = true);
+        clearInterval(t);
+        return;
+      }
+      const d = Math.floor(diff / (24*60*60*1000)); diff %= 24*60*60*1000;
+      const h = Math.floor(diff / (60*60*1000)); diff %= 60*60*1000;
+      const m = Math.floor(diff / (60*1000)); diff %= 60*1000;
+      const s = Math.floor(diff / 1000);
+      const txt = `${d} ימים ${pad(h)}:${pad(m)}:${pad(s)}`;
+      main && (main.textContent = txt);
+      sticky && (sticky.textContent = txt);
+    }
+    tick(); const t = setInterval(tick, 1000);
+  })();
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "AquaBlast Landing (RTL)",
+  "settings": [
+    { "type": "text", "id": "brand", "label": "Brand text", "default": "AquaBlast" },
+    { "type": "richtext", "id": "heading", "label": "כותרת ראשית", "default": "אקדח מים דו־כיווני – בחרו דגם והזמינו" },
+    { "type": "text", "id": "subheading", "label": "תת־כותרת", "default": "אותו מוצר, כמה דגמים לבחירה – צבעים וקומבינציות לפי מה שמתאים לכם." },
+    { "type": "text", "id": "price_now", "label": "מחיר נוכחי", "default": "24.90 ₪" },
+    { "type": "text", "id": "price_old", "label": "מחיר קודם", "default": "49.90 ₪" },
+    { "type": "product", "id": "product", "label": "בחרו מוצר" },
+    { "type": "image_picker", "id": "hero_image", "label": "תמונת הירו (לא חובה)" },
+    { "type": "url", "id": "video_url", "label": "קישור וידאו MP4 (4:3)" },
+    { "type": "image_picker", "id": "gallery_images", "label": "גלריה – עד 6 תמונות", "info": "אם לא נבחרו, יוצגו תמונות המוצר", "limit": 6 },
+    { "type": "text", "id": "payment_pill", "label": "תווית תשלום", "default": "💳 אשראי / Bit / PayPal • 🔒 SSL • ↩️ החזר 14 יום" },
+    { "type": "text", "id": "stock_note", "label": "הערת מלאי", "default": "זמין במלאי" },
+    { "type": "range", "id": "promo_days", "label": "אורך מבצע (ימים)", "default": 7, "min": 1, "max": 30, "step": 1 },
+    { "type": "checkbox", "id": "show_sticky", "label": "להציג סרגל דביק עם טיימר וכפתור", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "תמונת ביקורת",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "תמונת ביקורת" },
+        { "type": "text", "id": "stars", "label": "דירוג (כוכבים)", "default": "★★★★★" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "AquaBlast Landing (RTL)",
+      "category": "Product",
+      "blocks": [
+        { "type": "review" }, { "type": "review" }, { "type": "review" }
+      ]
+    }
+  ]
+}
+{% endschema %}
