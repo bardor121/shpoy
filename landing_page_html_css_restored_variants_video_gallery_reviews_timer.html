@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>אקדח מים דו־כיווני – בחירת דגם והזמנה</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0f1115; --card:#141820; --muted:#9aa0a6; --text:#e7eaf0; --ok:#22c55e; --warn:#f59e0b; --max:1120px; --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.25)}
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,#0e0f12,#0f1217);color:var(--text);font-family:"Heebo",system-ui,Segoe UI,Arial,sans-serif}
+    a{color:inherit;text-decoration:none}
+    img,video{max-width:100%;display:block;border-radius:14px}
+    .container{max-width:var(--max);margin:0 auto;padding:clamp(16px,3vw,28px)}
+    .pill{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border-radius:999px;background:#171a20;color:#cbd5e1;border:1px solid #202634;font-weight:600;font-size:.92rem}
+    header{position:sticky;top:0;z-index:20;backdrop-filter:saturate(120%) blur(6px);background:rgba(10,10,14,.7);border-bottom:1px solid #1c2030}
+    header .wrap{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 16px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:38px;height:38px;border-radius:12px;background:radial-gradient(circle at 30% 30%, #8b5cf6, #4c1d95)}
+    nav{display:flex;gap:18px;align-items:center;font-weight:700;color:#cbd5e1}
+    .cta{background:var(--ok);color:#04150a;padding:12px 18px;border-radius:12px;font-weight:900;border:none;cursor:pointer;box-shadow:0 10px 20px rgba(34,197,94,.25);transition:transform .15s ease}
+    .cta[disabled]{opacity:.6;cursor:not-allowed}
+    .cta:hover:not([disabled]){transform:translateY(-2px)}
+    .hero .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:center}
+    .card{background:linear-gradient(180deg,#14151d,#10121a);border:1px solid #1f2330;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+    .h1{font-size:clamp(28px,4.2vw,44px);line-height:1.15;margin:10px 0 10px;font-weight:900}
+    .sub{color:#cbd5e1;font-size:1.1rem}
+    .price{display:flex;align-items:end;gap:14px;margin:16px 0}
+    .price .now{font-size:clamp(24px,4vw,40px);font-weight:900}
+    .price .old{color:#9ca3af;text-decoration:line-through}
+    .urgency{display:flex;gap:10px;align-items:center;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.4);color:#ffd89c;padding:8px 12px;border-radius:12px;font-weight:800}
+    .timer{font-variant-numeric:tabular-nums;letter-spacing:.5px;color:#ffe7b0}
+    .section{margin:48px 0}
+    .section h2{font-size:clamp(22px,3.5vw,34px);margin:0 0 18px;font-weight:900}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .gallery img{width:100%;height:auto;border-radius:12px;border:1px solid #232634}
+    .reviews-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .r-card{position:relative;border:1px solid #232634;border-radius:14px;overflow:hidden;background:#0e1016}
+    .r-card img{width:100%;height:auto;display:block}
+    .stars{position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,.55);padding:6px 10px;border-radius:999px;font-weight:800}
+    .sticky{position:sticky;bottom:0;z-index:30;background:rgba(10,10,14,.9);backdrop-filter:blur(8px);border-top:1px solid #1e2230}
+    .sticky .wrap{max-width:var(--max);margin:0 auto;display:flex;align-items:center;gap:14px;padding:10px 16px}
+    /* Variant picker */
+    .picker{display:grid;gap:10px;margin-top:8px}
+    .picker .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .swatches{display:flex;gap:8px;flex-wrap:wrap}
+    .swatch{min-width:42px;padding:8px 12px;border-radius:10px;border:1px solid #2a3142;background:#141722;cursor:pointer;font-weight:700;color:#d5dbeb}
+    .swatch[aria-pressed="true"]{outline:2px solid #22c55e;outline-offset:2px;background:#0f1420}
+    select{appearance:none;background:#12141a;color:#e7eaf0;padding:10px 12px;border:1px solid #24283a;border-radius:10px;min-width:220px}
+    .qty{display:flex;align-items:center;gap:6px}
+    .qty input{width:70px;padding:8px 10px;border-radius:10px;border:1px solid #24283a;background:#0f1218;color:#fff}
+    .inline-cta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px}
+    .mini-note{color:#aab2bf;font-size:.9rem}
+    /* Video as image ratio */
+    .media-frame{border:1px solid #232634;border-radius:14px;overflow:hidden;background:#0c0e13}
+    .media-frame video{width:100%;height:auto;object-fit:cover;aspect-ratio:4/3}
+    @media (max-width:980px){.hero .grid{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}.gallery,.reviews-photos{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="brand"><div class="logo" aria-hidden="true"></div><strong style="font-size:1.05rem">AquaBlast</strong></div>
+      <nav>
+        <a href="#variants">דגמים</a>
+        <a href="#video">וידאו</a>
+        <a href="#reviews">ביקורות</a>
+        <button class="cta" onclick="document.querySelector('#order').scrollIntoView({behavior:'smooth'});">קנה עכשיו</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container hero">
+    <div class="grid">
+      <section class="card">
+        <div class="pill">💳 אשראי / Bit / PayPal • 🔒 SSL • ↩️ החזר 14 יום</div>
+        <h1 class="h1">אקדח מים דו־כיווני – בחרו דגם והזמינו</h1>
+        <p class="sub">אותו מוצר, כמה דגמים לבחירה – צבעים וקומבינציות לפי מה שמתאים לכם.</p>
+        <div class="price"><div class="now">24.90 ₪</div><div class="old">49.90 ₪</div></div>
+        <div class="urgency">⏳ המבצע מסתיים בעוד: <span id="dealTimer" class="timer">—</span></div>
+
+        <!-- בחירת דגם + סוואצ'ים -->
+        <div id="variants" class="picker" aria-label="בחירת דגם">
+          <div class="row">
+            <label for="modelSelect"><strong>בחרו דגם:</strong></label>
+            <select id="modelSelect">
+              <option value="1pcs-pink" selected>1 יח׳ – ורוד</option>
+              <option value="1pcs-blue">1 יח׳ – כחול</option>
+              <option value="1pcs-white">1 יח׳ – לבן</option>
+              <option value="2pcs-white-pink">2 יח׳ – לבן + ורוד</option>
+              <option value="2pcs-white-blue">2 יח׳ – לבן + כחול</option>
+              <option value="3pcs-mix">3 יח׳ – מיקס</option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="mini-note">או בחרו בלחיצה מהירה:</div>
+            <div class="swatches" role="group" aria-label="דגמים מהירים">
+              <button class="swatch" data-value="1pcs-pink" aria-pressed="true">1 ורוד</button>
+              <button class="swatch" data-value="1pcs-blue">1 כחול</button>
+              <button class="swatch" data-value="1pcs-white">1 לבן</button>
+              <button class="swatch" data-value="2pcs-white-pink">2 לבן+ורוד</button>
+              <button class="swatch" data-value="2pcs-white-blue">2 לבן+כחול</button>
+              <button class="swatch" data-value="3pcs-mix">3 מיקס</button>
+            </div>
+          </div>
+          <div class="row qty">
+            <label for="qty"><strong>כמות:</strong></label>
+            <input id="qty" type="number" min="1" value="1" />
+          </div>
+          <div class="inline-cta">
+            <button id="buyNow" class="cta" onclick="goCheckout()">קנה עכשיו</button>
+            <span class="pill" id="skuView">SKU: SKU-PNK-1</span>
+          </div>
+          <div class="mini-note">⏳ מבצע עד חצות • נשארו <strong>5</strong> יח׳ במלאי לכל דגם</div>
+        </div>
+      </section>
+
+      <aside class="card">
+        <img id="heroImg" alt="אקדח מים – תצוגת דגם" src="https://bnrunb-m0.myshopify.com/cdn/shop/files/Sd8a863005e8c4f87af4d216bad35d78fb.webp?v=1754860451&width=1445" />
+      </aside>
+    </div>
+  </main>
+
+  <!-- וידאו ללא כותרת; גודל 4:3 כמו תמונה -->
+  <section id="video" class="container section">
+    <div class="media-frame">
+      <video controls playsinline preload="metadata">
+        <source src="https://video.aliexpress-media.com/play/u/ae_sg_item/2211632261931/p/1/e/6/t/10301/4000292006262.mp4?from=chrome&definition=h265" type="video/mp4" />
+        הדפדפן שלך לא תומך בוידאו.
+      </video>
+    </div>
+  </section>
+
+  <section class="container section">
+    <h2>גלריה</h2>
+    <div class="gallery">
+      <img alt="ורוד – תקריב" src="https://bnrunb-m0.myshopify.com/cdn/shop/files/Sd8a863005e8c4f87af4d216bad35d78fb.webp?v=1754860451&width=1445" />
+      <img alt="לבן – תקריב" src="https://bnrunb-m0.myshopify.com/cdn/shop/files/S9997192cfda64c88b8028fe458e62ca55.webp?v=1754860451&width=1445" />
+      <img alt="כחול – תקריב" src="https://bnrunb-m0.myshopify.com/cdn/shop/files/S0aa21dcf47784ffbaa6f81b242626d3bt.webp?v=1754860451&width=1445" />
+      <img alt="שימוש בכיור – לבן" src="https://bnrunb-m0.myshopify.com/cdn/shop/files/Sd54c8877d3c24d108152de5f9a8104f8S.webp?v=1754860442&width=1445" />
+      <img alt="ביד – כחול" src="https://bnrunb-m0.myshopify.com/cdn/shop/files/S7c8afc19b7024fe9b841483e04be6023p.webp?v=1754857022&width=1445" />
+      <img alt="סט שלושה" src="https://bnrunb-m0.myshopify.com/cdn/shop/files/S15b05fa6f2dd422baba770a8bb2c31a5g.webp?v=1754857022&width=1445" />
+    </div>
+  </section>
+
+  <section id="reviews" class="container section">
+    <h2>מה הלקוחות שלנו אומרים</h2>
+    <div class="reviews-photos">
+      <div class="r-card">
+        <img src="https://i.ibb.co/vxm4Rx8W/Screenshot-2025-08-10-040021.jpg" alt="ביקורת לקוח 1" loading="lazy" />
+        <div class="stars">★★★★★</div>
+      </div>
+      <div class="r-card">
+        <img src="https://i.ibb.co/mCG3hmry/Screenshot-2025-08-10-035157.jpg" alt="ביקורת לקוח 2" loading="lazy" />
+        <div class="stars">★★★★☆</div>
+      </div>
+      <div class="r-card">
+        <img src="https://i.ibb.co/G46w3GbG/Screenshot-2025-08-10-040541.jpg" alt="ביקורת לקוח 3" loading="lazy" />
+        <div class="stars">★★★★★</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="order" class="container section">
+    <h2>איך ממשיכים להזמנה?</h2>
+    <p>בחרתם דגם וכמות? לחצו על הכפתור וניקח אתכם לקופה עם הדגם שבחרתם.</p>
+    <button class="cta" onclick="goCheckout()">קנה עכשיו</button>
+  </section>
+
+  <div class="sticky">
+    <div class="wrap">
+      <div class="pill">⏳ מסתיים בעוד: <span id="dealTimerSticky" class="timer">—</span></div>
+      <div style="margin-inline-start:auto"></div>
+      <button id="stickyCta" class="cta" onclick="goCheckout()">קנה עכשיו</button>
+    </div>
+  </div>
+
+  <script>
+    // ===== Variant map: דגמים -> תמונות + SKU מהחנות =====
+    const variantMap = {
+      '1pcs-pink':  {label:'1 ורוד',        sku:'SKU-PNK-1',  image:'https://bnrunb-m0.myshopify.com/cdn/shop/files/Sd8a863005e8c4f87af4d216bad35d78fb.webp?v=1754860451&width=1445'},
+      '1pcs-blue':  {label:'1 כחול',        sku:'SKU-BLU-1',  image:'https://bnrunb-m0.myshopify.com/cdn/shop/files/S0aa21dcf47784ffbaa6f81b242626d3bt.webp?v=1754860451&width=1445'},
+      '1pcs-white': {label:'1 לבן',         sku:'SKU-WHT-1',  image:'https://bnrunb-m0.myshopify.com/cdn/shop/files/S9997192cfda64c88b8028fe458e62ca55.webp?v=1754860451&width=1445'},
+      '2pcs-white-pink': {label:'2 לבן+ורוד', sku:'SKU-WP-2',   image:'https://bnrunb-m0.myshopify.com/cdn/shop/files/S15b05fa6f2dd422baba770a8bb2c31a5g.webp?v=1754857022&width=1445'},
+      '2pcs-white-blue': {label:'2 לבן+כחול', sku:'SKU-WB-2',   image:'https://bnrunb-m0.myshopify.com/cdn/shop/files/S15b05fa6f2dd422baba770a8bb2c31a5g.webp?v=1754857022&width=1445'},
+      '3pcs-mix': {label:'3 מיקס', sku:'SKU-MIX-3', image:'https://bnrunb-m0.myshopify.com/cdn/shop/files/S15b05fa6f2dd422baba770a8bb2c31a5g.webp?v=1754857022&width=1445'}
+    };
+
+    const sel = document.getElementById('modelSelect');
+    const swatches = document.querySelectorAll('.swatch');
+    const heroImg = document.getElementById('heroImg');
+    const skuView  = document.getElementById('skuView');
+    const qtyInput = document.getElementById('qty');
+
+    function setVariant(val){
+      if(!variantMap[val]) return;
+      if(sel) sel.value = val;
+      swatches.forEach(b=> b.setAttribute('aria-pressed', String(b.dataset.value===val)));
+      if(heroImg) heroImg.src = variantMap[val].image;
+      if(skuView) skuView.textContent = 'SKU: ' + (variantMap[val].sku || val);
+    }
+
+    sel?.addEventListener('change', e=> setVariant(e.target.value));
+    swatches.forEach(b=> b.addEventListener('click', ()=> setVariant(b.dataset.value)));
+
+    // ===== Countdown: שבוע מהביקור הראשון (נשמר בדפדפן) =====
+    (function initCountdown(){
+      const KEY = 'aquablast_promo_start_ts';
+      const WEEK = 7*24*60*60*1000;
+      let start = Number(localStorage.getItem(KEY));
+      if(!start){ start = Date.now(); localStorage.setItem(KEY, String(start)); }
+      const deadline = start + WEEK;
+      const $main = document.getElementById('dealTimer');
+      const $sticky = document.getElementById('dealTimerSticky');
+      const $ctas = [document.getElementById('buyNow'), document.getElementById('stickyCta')].filter(Boolean);
+      function pad(n){ return String(n).padStart(2,'0'); }
+      function tick(){
+        const now = Date.now();
+        let diff = deadline - now;
+        if(diff <= 0){
+          $main && ($main.textContent = 'המבצע הסתיים');
+          $sticky && ($sticky.textContent = 'המבצע הסתיים');
+          $ctas.forEach(btn=> btn && (btn.disabled = true));
+          clearInterval(t);
+          return;
+        }
+        const d = Math.floor(diff / (24*60*60*1000)); diff %= 24*60*60*1000;
+        const h = Math.floor(diff / (60*60*1000)); diff %= 60*60*1000;
+        const m = Math.floor(diff / (60*1000)); diff %= 60*1000;
+        const s = Math.floor(diff / 1000);
+        const txt = `${d} ימים ${pad(h)}:${pad(m)}:${pad(s)}`;
+        $main && ($main.textContent = txt);
+        $sticky && ($sticky.textContent = txt);
+      }
+      tick();
+      const t = setInterval(tick, 1000);
+    })();
+
+    // ===== דמו לקופה =====
+    function goCheckout(){
+      const v = sel?.value || '1pcs-pink';
+      const q = Math.max(1, parseInt(qtyInput?.value||'1',10));
+      alert('ממשיך לקופה עם דגם: '+ (variantMap[v]?.label||v) +' • כמות: '+ q);
+      // כאן נחליף ל-URL קופה אמיתי של Shopify לפי Variant ID וכמות
+      // location.href = '/cart/{variant_id}:{qty}';
+    }
+    window.goCheckout = goCheckout;
+
+    // אתחול ברירת מחדל
+    setVariant('1pcs-pink');
+  </script>
+</body>
+</html>
